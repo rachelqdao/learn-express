@@ -51,6 +51,19 @@ app.post('/write/adduser', (req, res) => {
   res.send('done');
 })
 
+app.use('/read/username', addMsgToRequest)
+app.get('/read/username/:name', (req, res) => {
+  let name = req.params.name;
+  let users = req.users.filter(user => user.username === name)
+
+  if (users.length === 0) {
+    return res.status(404).send('User not found')
+  }
+
+  res.send(users)
+})
+
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
